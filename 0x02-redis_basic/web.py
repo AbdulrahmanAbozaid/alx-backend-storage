@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-This module provides a function for fetching a web page, caching it in Redis for
+This module provides a function for fetching a
+web page, caching it in Redis for
 10 seconds, and tracking the number of times each URL is accessed.
 """
 
@@ -30,7 +31,8 @@ def count_access(method: Callable) -> Callable:
 @count_access
 def get_page(url: str) -> str:
     """
-    Fetches the HTML content of a URL, caches it for 10 seconds, and returns the content.
+    Fetches the HTML content of a URL, caches it for
+    10 seconds, and returns the content.
     Args:
         url (str): The URL of the web page to fetch.
     Returns:
