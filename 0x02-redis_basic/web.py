@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-This module provides a function for fetching a
-web page, caching it in Redis for
-10 seconds, and tracking the number of times each URL is accessed.
+Module for implementing a simple web page caching and access tracking system
+using Redis. The module fetches the content of a web page, caches it for 10
+seconds, and keeps track of how many times the page has been accessed.
 """
 
 import requests
@@ -15,11 +15,13 @@ cache = redis.Redis()
 
 def count_access(method: Callable) -> Callable:
     """
-    Decorator that tracks how many times a URL is accessed.
+    Decorator to count accesses to a specific URL using Redis.
+
     Args:
-        method (Callable): The function to be decorated.
+        method (Callable): The method to be decorated.
+
     Returns:
-        Callable: The wrapped function with counting behavior.
+        Callable: The wrapped method with access counting functionality.
     """
     def wrapper(url: str) -> str:
         count_key = f"count:{url}"
@@ -31,10 +33,12 @@ def count_access(method: Callable) -> Callable:
 @count_access
 def get_page(url: str) -> str:
     """
-    Fetches the HTML content of a URL, caches it for
-    10 seconds, and returns the content.
+    Fetch the HTML content of a URL, cache it for 10 seconds, and track the
+    number of accesses.
+
     Args:
         url (str): The URL of the web page to fetch.
+
     Returns:
         str: The HTML content of the web page.
     """
@@ -51,3 +55,12 @@ def get_page(url: str) -> str:
     # Cache the content with an expiration of 10 seconds
     cache.setex(cache_key, 10, content)
     return content
+
+
+if __name__ == "__main__":
+    # Test URL to simulate a slow response and test caching
+    test_url = "http://slowwly.robertomurray.co.uk/delay" +\
+            "/3000/url/https://www.example.com"
+
+    print(get_page(test_url))  # First request - caches the page content
+    print(get_page(test_url))  # Second request - should retrieve from cache
