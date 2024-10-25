@@ -59,7 +59,8 @@ def get_page(url: str) -> str:
 
 if __name__ == "__main__":
     # Test URL to simulate a slow response and test caching
-    test_url = "http://slowwly.robertomurray.co.uk/delay/3000/url/https://www.example.com"
-    
+    test_url = "http://slowwly.robertomurray.co.uk/delay" +\
+            "/3000/url/https://www.example.com"
+
     print(get_page(test_url))  # First request - caches the page content
     print(get_page(test_url))  # Second request - should retrieve from cache
