@@ -51,13 +51,3 @@ def get_page(url: str) -> str:
     # Cache the content with an expiration of 10 seconds
     cache.setex(cache_key, 10, content)
     return content
-
-
-if __name__ == "__main__":
-    # Example usage and testing with http://google.com
-    test_url = "http://google.com"
-
-    print(get_page(test_url))  # First call, fetches and caches content
-    print(get_page(test_url))  # Second call, retrieves content from cache
-
-    # Wait 10 seconds and try again to see if the cache expired
